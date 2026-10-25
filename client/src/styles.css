@@ -42,14 +42,8 @@ h3 { font-size: 15px; margin: 0 0 12px; }
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.18);
 }
 .topbar-left { cursor: pointer; }
-.logo { display: inline-flex; align-items: center; gap: 10px; }
-.logo-text { display: flex; align-items: baseline; gap: 2px; letter-spacing: -0.5px; }
-.logo-text b { font-size: 20px; color: var(--sk-red); font-weight: 900; }
-.logo-text i { font-size: 20px; color: var(--sk-orange); font-style: normal; font-weight: 900; }
-.logo-text em {
-  font-style: normal; font-size: 11px; color: #9aa4b8;
-  margin-left: 8px; border-left: 1px solid #3d4557; padding-left: 8px; font-weight: 600;
-}
+.logo { display: inline-flex; align-items: center; }
+.logo-img { display: block; width: auto; background: #fff; border-radius: 8px; padding: 4px 9px; }
 .topbar-nav { display: flex; gap: 4px; margin-left: 8px; }
 .nav-item {
   background: transparent; border: 0; color: #c6cddb; cursor: pointer;
@@ -234,5 +228,4 @@ textarea { resize: vertical; }
   .form-grid { grid-template-columns: repeat(2, 1fr); }
   .photo-split { grid-template-columns: 1fr; }
   .topbar { gap: 12px; padding: 0 12px; }
-  .logo-text em { display: none; }
 }
