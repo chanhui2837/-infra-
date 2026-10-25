@@ -14,6 +14,10 @@ import revisionRoutes from './routes/revisions.js';
 import photoRoutes from './routes/photos.js';
 import summaryRoutes from './routes/summary.js';
 import exportRoutes from './routes/export.js';
+import inboxRoutes from './routes/inbox.js';
+import Trip from './models/Trip.js';
+import Revision from './models/Revision.js';
+import { renumber } from './renumber.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -28,6 +32,7 @@ app.use('/api/trips', requireAuth, tripRoutes);
 app.use('/api/revisions', requireAuth, revisionRoutes);
 app.use('/api/summary', requireAuth, summaryRoutes);
 app.use('/api/export', requireAuth, exportRoutes);
+app.use('/api/inbox', requireAuth, inboxRoutes);
 app.use('/api/photos', photoRoutes);
 
 app.use('/api', (_req, res) => res.status(404).json({ error: 'API 경로를 찾을 수 없습니다.' }));
@@ -52,6 +57,10 @@ async function start() {
   if (process.env.AUTO_SEED !== '0') {
     await runSeed({ withImages: !isMemoryDB() || process.env.SEED_IMAGES === '1' });
   }
+
+  // 기존 데이터의 빈 번호도 한 번 정리
+  await renumber(Trip);
+  await renumber(Revision);
 
   app.listen(PORT, () => console.log(`[server] http://localhost:${PORT} 실행 중`));
 }

@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import Trip from '../models/Trip.js';
 import { requireDeleter } from '../middleware/auth.js';
+import { renumber } from '../renumber.js';
 
 const router = Router();
 
@@ -77,6 +78,8 @@ router.patch('/:id', async (req, res) => {
 router.delete('/:id', requireDeleter, async (req, res) => {
   const item = await Trip.findByIdAndDelete(req.params.id);
   if (!item) return res.status(404).json({ error: '항목을 찾을 수 없습니다.' });
+  // 삭제 후 순번을 1부터 다시 매김 (2번 삭제 시 3번 → 2번)
+  await renumber(Trip);
   res.json({ ok: true });
 });
 

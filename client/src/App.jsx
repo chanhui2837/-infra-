@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard.jsx';
 import TripsPage from './pages/TripsPage.jsx';
 import RevisionsPage from './pages/RevisionsPage.jsx';
 import GalleryPage from './pages/GalleryPage.jsx';
+import InboxPage from './pages/InboxPage.jsx';
 
 function Center({ children }) {
   return <div className="center">{children}</div>;
@@ -36,6 +37,7 @@ export default function App() {
       <Route path="/trips" element={<Protected><TripsPage /></Protected>} />
       <Route path="/revisions" element={<Protected><RevisionsPage /></Protected>} />
       <Route path="/gallery" element={<Protected><GalleryPage /></Protected>} />
+      <Route path="/inbox" element={<Protected><InboxPage /></Protected>} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

@@ -10,11 +10,13 @@ export default function Login() {
   const [nnumber, setNnumber] = useState('');
   const [name, setName] = useState('');
   const [err, setErr] = useState('');
+  const [info, setInfo] = useState('');
   const [busy, setBusy] = useState(false);
 
   const onSubmit = async (e) => {
     e.preventDefault();
     setErr('');
+    setInfo('');
     const nn = nnumber.trim().toUpperCase();
     if (!NN_RE.test(nn)) {
       setErr('사번은 N + 숫자 7자리 형식이어야 합니다. (예: N1101924)');
@@ -27,7 +29,14 @@ export default function Login() {
     setBusy(true);
     try {
       if (mode === 'login') await login(nn);
-      else await signup(name.trim(), nn);
+      else {
+        const r = await signup(name.trim(), nn);
+        if (r.pending) {
+          setInfo(r.message);
+          setName('');
+          setMode('login');
+        }
+      }
     } catch (e2) {
       setErr(e2.message);
     } finally {
@@ -45,10 +54,10 @@ export default function Login() {
         <p className="sub">춘천품질개선팀 · 차단기 트립 / DORS415 리비전 진행내역 공유 시스템</p>
 
         <div className="tabs">
-          <button className={mode === 'login' ? 'tab active' : 'tab'} onClick={() => { setMode('login'); setErr(''); }}>
+          <button className={mode === 'login' ? 'tab active' : 'tab'} onClick={() => { setMode('login'); setErr(''); setInfo(''); }}>
             로그인
           </button>
-          <button className={mode === 'signup' ? 'tab active' : 'tab'} onClick={() => { setMode('signup'); setErr(''); }}>
+          <button className={mode === 'signup' ? 'tab active' : 'tab'} onClick={() => { setMode('signup'); setErr(''); setInfo(''); }}>
             회원가입
           </button>
         </div>
@@ -78,6 +87,7 @@ export default function Login() {
           </label>
 
           {err && <div className="error-text">{err}</div>}
+          {info && <div className="info-text">{info}</div>}
 
           <button className="btn primary block" disabled={busy}>
             {busy ? '처리 중…' : mode === 'login' ? '로그인' : '회원가입'}
@@ -87,7 +97,7 @@ export default function Login() {
         <p className="hint">
           {mode === 'login'
             ? '사번(N + 숫자 7자리)만 입력하면 로그인됩니다.'
-            : '회원가입은 이름과 사번만 입력하면 됩니다. (별도 비밀번호 없음)'}
+            : '이름과 사번만 입력하면 가입 요청이 전송되며, 관리자(N1101924)의 승인 후 로그인할 수 있습니다.'}
         </p>
       </div>
     </div>

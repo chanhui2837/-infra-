@@ -35,7 +35,7 @@ export async function runSeed({ force = false, withImages = false, log = console
 
   // 1) 차단기 트립 (엑셀 2번 시트)
   const trips = readJson('trips.json') || [];
-  const tripCount = await Trip.estimatedDocumentCount();
+  const tripCount = await Trip.countDocuments();
   if (force) await Trip.deleteMany({});
   if (force || tripCount === 0) {
     if (trips.length) {
@@ -49,7 +49,7 @@ export async function runSeed({ force = false, withImages = false, log = console
 
   // 2) DORS415 리비전 (엑셀 3번 시트)
   const revisions = readJson('revisions.json') || [];
-  const revCount = await Revision.estimatedDocumentCount();
+  const revCount = await Revision.countDocuments();
   if (force) await Revision.deleteMany({});
   if (force || revCount === 0) {
     if (revisions.length) {
@@ -62,14 +62,14 @@ export async function runSeed({ force = false, withImages = false, log = console
   }
 
   // 3) 기본 계정 (최초 1회)
-  const userCount = await User.estimatedDocumentCount();
+  const userCount = await User.countDocuments();
   if (userCount === 0) {
     await User.create({ nnumber: 'N1101924', name: '이상민' });
     created.users = 1;
   }
 
   // 4) 엑셀에 첨부된 사진을 GridFS 로 적재
-  const photoCount = await Photo.estimatedDocumentCount();
+  const photoCount = await Photo.countDocuments();
   if ((force || photoCount === 0) && withImages) {
     const imgDir = path.join(DATA_DIR, 'excel-images');
     const list = readJson('excel-images.json') || [];

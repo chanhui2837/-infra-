@@ -5,6 +5,8 @@ const AuthContext = createContext(null);
 
 // 진행내역 삭제 권한을 가진 사번 (서버 DELETER_NNUMBER 와 동일)
 export const DELETER_NNUMBER = 'N1101924';
+// 가입 승인(수신함) 담당 사번 (서버 APPROVER_NNUMBER 와 동일)
+export const APPROVER_NNUMBER = 'N1101924';
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
@@ -35,10 +37,12 @@ export function AuthProvider({ children }) {
   };
 
   const signup = async (name, nnumber) => {
-    const { token, user } = await api('/auth/signup', { method: 'POST', body: { name, nnumber } });
-    setToken(token);
-    setUser(user);
-    return user;
+    const data = await api('/auth/signup', { method: 'POST', body: { name, nnumber } });
+    // 승인 대기: 토큰 없이 안내 메시지만 돌려준다 (승인 담당자 본인은 바로 로그인)
+    if (data.pending) return { pending: true, message: data.message };
+    setToken(data.token);
+    setUser(data.user);
+    return { pending: false, user: data.user };
   };
 
   const logout = () => {

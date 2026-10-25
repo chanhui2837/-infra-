@@ -33,3 +33,13 @@ export function requireDeleter(req, res, next) {
   }
   next();
 }
+
+// 회원가입 승인 권한을 가진 사번 (수신함 담당)
+export const APPROVER_NNUMBER = DELETER_NNUMBER;
+
+export function requireApprover(req, res, next) {
+  if (req.user?.nnumber !== APPROVER_NNUMBER) {
+    return res.status(403).json({ error: `수신함은 ${APPROVER_NNUMBER} 사용자만 사용할 수 있습니다.` });
+  }
+  next();
+}

@@ -1,5 +1,7 @@
+import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../auth.jsx';
+import { useAuth, APPROVER_NNUMBER } from '../auth.jsx';
+import { api } from '../api.js';
 
 // SK오엔에스 로고
 export default function Logo({ size = 34 }) {
@@ -15,11 +17,25 @@ export function TopBar() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
+  const isApprover = user?.nnumber === APPROVER_NNUMBER;
+  const [pending, setPending] = useState(0);
+
+  // 수신함 뱃지: 대기 중 가입 요청 건수 (30초마다 갱신)
+  useEffect(() => {
+    if (!isApprover) return undefined;
+    let alive = true;
+    const tick = () => api('/inbox/count').then((d) => alive && setPending(d.pending)).catch(() => {});
+    tick();
+    const t = setInterval(tick, 30000);
+    return () => { alive = false; clearInterval(t); };
+  }, [isApprover, pathname]);
+
   const menus = [
     { to: '/', label: '실적 총괄' },
     { to: '/trips', label: '차단기 트립' },
     { to: '/revisions', label: 'DORS415 리비전' },
     { to: '/gallery', label: '공유 갤러리' },
+    ...(isApprover ? [{ to: '/inbox', label: '수신함', badge: pending }] : []),
   ];
 
   return (
@@ -35,6 +51,7 @@ export function TopBar() {
             onClick={() => navigate(m.to)}
           >
             {m.label}
+            {m.badge > 0 && <span className="nav-badge">{m.badge}</span>}
           </button>
         ))}
       </nav>
