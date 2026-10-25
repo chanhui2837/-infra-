@@ -24,7 +24,7 @@ function isDone(value) {
 }
 
 /** 지역별 대상/완료/미완료/조치율 집계 */
-function summarize(items, doneField) {
+export function summarize(items, doneField) {
   const byRegion = {};
   for (const r of REGIONS) byRegion[r] = { region: r, total: 0, done: 0, pending: 0 };
 

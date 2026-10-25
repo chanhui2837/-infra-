@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { api } from '../api.js';
+import { api, downloadFile } from '../api.js';
 
 const pct = (v) => `${(v * 100).toFixed(1)}%`;
 
@@ -77,6 +77,8 @@ export default function Dashboard() {
   const [summary, setSummary] = useState(null);
   const [users, setUsers] = useState([]);
   const [err, setErr] = useState('');
+  const [downloading, setDownloading] = useState(false);
+  const [dlErr, setDlErr] = useState('');
 
   const load = async () => {
     try {
@@ -85,6 +87,18 @@ export default function Dashboard() {
       setUsers(u.users);
     } catch (e) {
       setErr(e.message);
+    }
+  };
+
+  const downloadExcel = async () => {
+    setDlErr('');
+    setDownloading(true);
+    try {
+      await downloadFile('/export');
+    } catch (e) {
+      setDlErr(e.message);
+    } finally {
+      setDownloading(false);
     }
   };
 
@@ -107,8 +121,15 @@ export default function Dashboard() {
             {updated && ` · 마지막 동기화 ${updated.toLocaleString('ko-KR')}`}
           </p>
         </div>
-        <button className="btn" onClick={load}>새로고침</button>
+        <div className="page-actions">
+          <button className="btn" onClick={load}>새로고침</button>
+          <button className="btn primary" onClick={downloadExcel} disabled={downloading}>
+            {downloading ? '내려받는 중…' : '⬇ 전체 정보 엑셀 다운로드'}
+          </button>
+        </div>
       </div>
+
+      {dlErr && <div className="error-text">{dlErr}</div>}
 
       <div className="work-grid">
         <WorkCard

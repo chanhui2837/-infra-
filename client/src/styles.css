@@ -60,6 +60,7 @@ h3 { font-size: 15px; margin: 0 0 12px; }
 /* ---------- Page ---------- */
 .page { padding: 24px; max-width: 1680px; margin: 0 auto; }
 .page-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 18px; }
+.page-actions { display: flex; gap: 8px; flex-shrink: 0; }
 
 /* ---------- Buttons ---------- */
 .btn {
@@ -223,9 +224,83 @@ textarea { resize: vertical; }
 .gallery-item figcaption span { font-size: 12px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .gallery-item figcaption small { font-size: 11px; color: var(--muted); }
 
+/* ---------- 반응형: 태블릿 ---------- */
 @media (max-width: 1100px) {
   .dashboard-bottom { grid-template-columns: 1fr; }
   .form-grid { grid-template-columns: repeat(2, 1fr); }
   .photo-split { grid-template-columns: 1fr; }
   .topbar { gap: 12px; padding: 0 12px; }
+  .work-grid { grid-template-columns: 1fr; }
+}
+
+/* ---------- 반응형: 모바일 ---------- */
+@media (max-width: 760px) {
+  body { font-size: 13.5px; }
+
+  /* 상단바: 1줄(로고/계정) + 메뉴 가로 스크롤 */
+  .topbar { flex-wrap: wrap; height: auto; padding: 8px 12px; gap: 8px 10px; }
+  .logo-img { height: 26px !important; padding: 3px 7px; }
+  .topbar-nav {
+    order: 3; width: 100%; margin-left: 0; gap: 6px;
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; padding-bottom: 2px;
+  }
+  .topbar-nav::-webkit-scrollbar { display: none; }
+  .nav-item { flex: 0 0 auto; padding: 7px 12px; font-size: 13px; }
+  .topbar-right { margin-left: auto; gap: 8px; }
+  .who b { font-size: 12px; }
+  .who small { font-size: 10px; }
+  .btn.ghost { padding: 6px 10px; font-size: 12px; }
+
+  /* 페이지 */
+  .page { padding: 14px; }
+  .page-head { flex-direction: column; align-items: stretch; gap: 10px; }
+  .page-actions { width: 100%; }
+  .page-actions .btn { flex: 1; }
+  .page-head > .btn { width: 100%; }
+  h1 { font-size: 19px; }
+  h2 { font-size: 16px; }
+
+  /* 카드 */
+  .work-card { padding: 16px; }
+  .work-card-head { flex-direction: column; align-items: stretch; gap: 8px; }
+  .work-card-head .btn { width: 100%; }
+  .stat-row { gap: 8px; }
+  .stat { padding: 10px 6px; }
+  .stat-value { font-size: 19px; }
+  .stat-label { font-size: 10px; }
+  .panel { padding: 16px; }
+
+  /* 툴바 */
+  .toolbar select, .toolbar .search { flex: 1 1 140px; min-width: 0; width: auto; }
+  .toolbar .count { margin-left: 0; width: 100%; text-align: right; }
+
+  /* 표 (가로 스크롤 유지) */
+  .table-wrap { max-height: none; border-radius: 10px; }
+  .data-table th, .data-table td { padding: 8px; font-size: 12px; }
+  .data-table td.wide, .data-table th.wide { min-width: 200px; max-width: 260px; }
+
+  /* 모달: 전체화면 */
+  .modal-backdrop { padding: 0; align-items: stretch; }
+  .modal { max-width: 100% !important; max-height: 100vh; height: 100vh; border-radius: 0; }
+  .modal-head { padding: 14px 16px; }
+  .modal-body { padding: 16px; }
+  .modal-actions { bottom: -16px; }
+  .form-grid { grid-template-columns: 1fr; gap: 10px; }
+  .form-grid .span-2, .form-grid .span-3 { grid-column: span 1; }
+
+  /* 방문/대응 이력 */
+  .visit-row { grid-template-columns: 1fr; gap: 6px; }
+  .visit-row .icon-btn { justify-self: end; }
+
+  /* 갤러리 */
+  .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
+
+  /* 로그인 */
+  .login-card { padding: 22px; }
+}
+
+@media (max-width: 420px) {
+  .stat-row { grid-template-columns: repeat(2, 1fr); }
+  .visit-row { grid-template-columns: 1fr; }
 }

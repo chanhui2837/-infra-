@@ -13,6 +13,7 @@ import tripRoutes from './routes/trips.js';
 import revisionRoutes from './routes/revisions.js';
 import photoRoutes from './routes/photos.js';
 import summaryRoutes from './routes/summary.js';
+import exportRoutes from './routes/export.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -26,6 +27,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/trips', requireAuth, tripRoutes);
 app.use('/api/revisions', requireAuth, revisionRoutes);
 app.use('/api/summary', requireAuth, summaryRoutes);
+app.use('/api/export', requireAuth, exportRoutes);
 app.use('/api/photos', photoRoutes);
 
 app.use('/api', (_req, res) => res.status(404).json({ error: 'API 경로를 찾을 수 없습니다.' }));
