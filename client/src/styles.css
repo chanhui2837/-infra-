@@ -171,6 +171,7 @@ textarea { resize: vertical; }
 }
 .data-table tbody tr:hover { background: #fafbfe; }
 .data-table td.wide, .data-table th.wide { white-space: normal; min-width: 260px; max-width: 420px; }
+.data-table td.note { white-space: pre-wrap; min-width: 220px; max-width: 360px; }
 .mono { font-family: Consolas, monospace; color: var(--ink-2); }
 .ok { color: var(--ok); font-weight: 700; }
 .danger { color: var(--danger); font-weight: 700; }
@@ -279,6 +280,7 @@ textarea { resize: vertical; }
   .table-wrap { max-height: none; border-radius: 10px; }
   .data-table th, .data-table td { padding: 8px; font-size: 12px; }
   .data-table td.wide, .data-table th.wide { min-width: 200px; max-width: 260px; }
+  .data-table td.note { min-width: 180px; max-width: 240px; }
 
   /* 모달: 전체화면 */
   .modal-backdrop { padding: 0; align-items: stretch; }

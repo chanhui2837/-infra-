@@ -144,6 +144,8 @@ export default function TripsPage() {
               <th>조치결과</th>
               <th>조치날짜</th>
               <th>조치자</th>
+              <th>조치내역</th>
+              <th>기타 내역</th>
               <th>교체 사진</th>
               <th>수정</th>
             </tr>
@@ -166,6 +168,8 @@ export default function TripsPage() {
                 <td className={/완료/.test(it.actionResult) ? 'ok' : 'danger'}>{it.actionResult}</td>
                 <td>{it.actionDate}</td>
                 <td>{it.actionBy}</td>
+                <td className="note">{it.actionNote}</td>
+                <td className="note">{it.etcNote}</td>
                 <td className="photo-cell">
                   <span className="pill">전 {it.beforePhotos?.length || 0}</span>
                   <span className="pill">후 {it.afterPhotos?.length || 0}</span>
@@ -177,7 +181,7 @@ export default function TripsPage() {
               </tr>
             ))}
             {items.length === 0 && (
-              <tr><td colSpan={17} className="empty">데이터가 없습니다.</td></tr>
+              <tr><td colSpan={19} className="empty">데이터가 없습니다.</td></tr>
             )}
           </tbody>
         </table>
