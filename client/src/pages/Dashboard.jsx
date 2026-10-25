@@ -13,7 +13,7 @@ function WorkCard({ title, accent, data, onOpen, description }) {
           <h2>{title}</h2>
           <p className="muted">{description}</p>
         </div>
-        <button className="btn" onClick={onOpen}>진행내역 열기 →</button>
+        <button className="btn primary" onClick={onOpen}>진행내역 열기 →</button>
       </div>
 
       <div className="stat-row">
