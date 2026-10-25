@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { api } from '../api.js';
+import { useAuth, DELETER_NNUMBER } from '../auth.jsx';
 import Modal from '../components/Modal.jsx';
 import PhotoField from '../components/PhotoField.jsx';
 
@@ -42,6 +43,8 @@ function Text({ label, value, onChange, type = 'text', placeholder }) {
 }
 
 export default function TripsPage() {
+  const { user } = useAuth();
+  const canDelete = user?.nnumber === DELETER_NNUMBER;
   const [items, setItems] = useState([]);
   const [region, setRegion] = useState('');
   const [status, setStatus] = useState('');
@@ -176,7 +179,9 @@ export default function TripsPage() {
                 </td>
                 <td className="row-actions">
                   <button className="btn small" onClick={() => openEdit(it)}>수정</button>
-                  <button className="btn small danger" onClick={() => remove(it)}>삭제</button>
+                  {canDelete && (
+                    <button className="btn small danger" onClick={() => remove(it)}>삭제</button>
+                  )}
                 </td>
               </tr>
             ))}

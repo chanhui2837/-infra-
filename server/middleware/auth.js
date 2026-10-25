@@ -22,3 +22,14 @@ export function requireAuth(req, res, next) {
     return res.status(401).json({ error: '세션이 만료되었습니다. 다시 로그인해 주세요.' });
   }
 }
+
+// 진행내역 삭제 권한을 가진 사번
+export const DELETER_NNUMBER = 'N1101924';
+
+// 진행내역 삭제는 지정된 사번만 가능 (requireAuth 뒤에 사용)
+export function requireDeleter(req, res, next) {
+  if (req.user?.nnumber !== DELETER_NNUMBER) {
+    return res.status(403).json({ error: '진행내역 삭제는 관리자(N1101924)만 할 수 있습니다.' });
+  }
+  next();
+}

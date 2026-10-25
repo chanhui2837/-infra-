@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import Revision from '../models/Revision.js';
+import { requireDeleter } from '../middleware/auth.js';
 
 const router = Router();
 
@@ -60,7 +61,7 @@ router.patch('/:id', async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', requireDeleter, async (req, res) => {
   const item = await Revision.findByIdAndDelete(req.params.id);
   if (!item) return res.status(404).json({ error: '항목을 찾을 수 없습니다.' });
   res.json({ ok: true });

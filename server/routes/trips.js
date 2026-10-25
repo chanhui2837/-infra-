@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import Trip from '../models/Trip.js';
+import { requireDeleter } from '../middleware/auth.js';
 
 const router = Router();
 
@@ -73,7 +74,7 @@ router.patch('/:id', async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', requireDeleter, async (req, res) => {
   const item = await Trip.findByIdAndDelete(req.params.id);
   if (!item) return res.status(404).json({ error: '항목을 찾을 수 없습니다.' });
   res.json({ ok: true });

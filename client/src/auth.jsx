@@ -3,6 +3,9 @@ import { api, getToken, setToken } from './api.js';
 
 const AuthContext = createContext(null);
 
+// 진행내역 삭제 권한을 가진 사번 (서버 DELETER_NNUMBER 와 동일)
+export const DELETER_NNUMBER = 'N1101924';
+
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
