@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: chuncheon-infra-portal
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: MONGODB_URI
+        sync: false # Render 대시보드에서 MongoDB Atlas 연결 문자열 입력
+      - key: JWT_SECRET
+        generateValue: true
+      - key: AUTO_SEED
+        value: "1"

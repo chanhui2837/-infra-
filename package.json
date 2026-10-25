@@ -1,0 +1,27 @@
+{
+  "name": "chuncheon-infra-portal",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "춘천품질개선팀 Infra설비 개선 진행내역 관리 포털 (차단기 트립 / DORS415 리비전)",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node server/index.js",
+    "build": "npm --prefix client install --no-audit --no-fund && npm --prefix client run build",
+    "seed": "node server/seed.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.5.1",
+    "multer": "^1.4.5-lts.1"
+  },
+  "devDependencies": {
+    "mongodb-memory-server": "^10.0.0"
+  }
+}

@@ -1,0 +1,8 @@
+node_modules/
+client/node_modules/
+client/dist/
+.env
+.env.local
+*.log
+_dump.txt
+_dump_xlsx.py
